@@ -384,10 +384,80 @@ export default function AdminPortal({ onBackToHome }) {
                   />
                 </div>
 
+                {/* Discord Embed Canlı Görünüm Önizleme */}
+                <div className="mt-6 p-4 rounded-2xl bg-[#1e1f22] border border-[#2b2d31] text-[#dbdee1] font-sans shadow-inner">
+                  <div className="flex items-center justify-between mb-3 text-[11px] text-slate-400 font-mono border-b border-white/5 pb-2">
+                    <span className="flex items-center gap-1.5 font-bold text-slate-300">
+                      <Eye className="w-3.5 h-3.5 text-rose-400" />
+                      Discord Ceza Logu Canlı Önizleme (Kalın & Zengin Embed)
+                    </span>
+                    <span className="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded font-bold">
+                      Canlı Simülasyon
+                    </span>
+                  </div>
+
+                  {/* Simulated Discord Embed */}
+                  <div className="p-4 rounded-xl bg-[#2b2d31] border-l-4 border-[#dc2626] shadow-sm">
+                    <div className="flex items-center gap-2 mb-2 text-[11px] font-bold text-white/80">
+                      <img 
+                        src="https://cdn-icons-png.flaticon.com/512/9422/9422956.png" 
+                        alt="icon" 
+                        className="w-4 h-4 rounded-full" 
+                      />
+                      <span>RETRO ROLEPLAY V1 • RESMİ ADMİNİSTRASYON HEYETİ</span>
+                    </div>
+
+                    <h4 className="text-sm font-extrabold text-white mb-2 tracking-tight">
+                      ⚖️ RESMİ CEZA VE DİSİPLİN YAPTIRIM KAYDI
+                    </h4>
+
+                    <div className="text-[11px] text-slate-300 mb-3 bg-black/30 p-2.5 rounded-lg border border-white/5 font-mono leading-relaxed">
+                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br />
+                      <span className="text-white font-bold">📌 KURAL İHLALİ VE DİSİPLİN İŞLEMİ</span><br />
+                      <span className="text-slate-400">&gt; Sunucu kurallarına aykırı davranış sergileyen oyuncuya resmi yaptırım uygulanmıştır.</span><br />
+                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">👤 ŞİKAYET EDEN</div>
+                        <div className="font-mono font-bold text-emerald-400">&gt; ➔ `{cezaForm.sikayetEden || 'Yetkili Tespiti / Şikayetsiz'}`</div>
+                      </div>
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">🚫 CEZALANDIRILAN OYUNCU</div>
+                        <div className="font-mono font-bold text-rose-400">&gt; ➔ `{cezaForm.cezalandirilan || 'Oyuncu Adı (ID)'}`</div>
+                      </div>
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">🛡️ CEZALANDIRAN YETKİLİ</div>
+                        <div className="font-mono font-bold text-blue-400">&gt; ➔ `{cezaForm.yetkili || 'Yetkili Ekibi'}`</div>
+                      </div>
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">⏳ CEZA SÜRESİ & TÜRÜ</div>
+                        <div className="font-mono font-bold text-amber-400">&gt; ➔ `{cezaForm.sure || '3 Gün'}`</div>
+                      </div>
+                      <div className="sm:col-span-2 bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-1">📝 CEZA SEBEBİ / GEREKÇE (KOD BLOĞU)</div>
+                        <pre className="text-amber-300 bg-black/40 p-2 rounded font-mono text-[11px] whitespace-pre-wrap">{cezaForm.sebep || 'Gerekçe ve kural ihlali detayı...'}</pre>
+                      </div>
+                      {cezaForm.kanit && (
+                        <div className="sm:col-span-2 bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                          <div className="text-[10px] font-black text-slate-400 mb-0.5">🔗 RESMİ KANIT / BAĞLANTI</div>
+                          <div className="font-mono text-cyan-400 text-[11px] underline truncate">{cezaForm.kanit}</div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-white/5 font-mono">
+                      <span>Retro Roleplay V1 • Disiplin ve Ceza Sicil Sistemi • RetroGuard</span>
+                      <span>Şimdi (Discord Embed)</span>
+                    </div>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={isSending}
-                  className="w-full py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-2xl bg-rose-600 hover:bg-rose-700 active:scale-[0.99] text-white font-black text-sm shadow-lg shadow-rose-600/20 transition-all flex items-center justify-center gap-2"
                 >
                   {isSending ? (
                     <>
@@ -483,10 +553,85 @@ export default function AdminPortal({ onBackToHome }) {
                   />
                 </div>
 
+                {/* Discord Embed Canlı Görünüm Önizleme */}
+                <div className="mt-6 p-4 rounded-2xl bg-[#1e1f22] border border-[#2b2d31] text-[#dbdee1] font-sans shadow-inner">
+                  <div className="flex items-center justify-between mb-3 text-[11px] text-slate-400 font-mono border-b border-white/5 pb-2">
+                    <span className="flex items-center gap-1.5 font-bold text-slate-300">
+                      <Eye className="w-3.5 h-3.5 text-amber-400" />
+                      Discord Hile Kontrol Çağrısı Canlı Önizleme (Kalın & Zengin Embed)
+                    </span>
+                    <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-bold">
+                      Canlı Simülasyon
+                    </span>
+                  </div>
+
+                  {/* Simulated Discord Embed */}
+                  <div className="p-4 rounded-xl bg-[#2b2d31] border-l-4 border-[#ff3b30] shadow-sm">
+                    <div className="text-[11px] text-amber-400 font-bold mb-2 font-mono">
+                      🚨 [ACİL ÇAĞRI] `{hileForm.supheliOyuncu || 'Şüpheli'}` hile kontrolüne çağrılmıştır! @everyone
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-2 text-[11px] font-bold text-white/80">
+                      <img 
+                        src="https://cdn-icons-png.flaticon.com/512/564/564619.png" 
+                        alt="icon" 
+                        className="w-4 h-4 rounded-full" 
+                      />
+                      <span>RETROGUARD SHIELD • HİLE VE GÜVENLİK BİRİMİ</span>
+                    </div>
+
+                    <h4 className="text-sm font-extrabold text-white mb-2 tracking-tight">
+                      🚨 RETROGUARD • ACİL HİLE KONTROL VE SCREENSHARE ÇAĞRISI
+                    </h4>
+
+                    <div className="text-[11px] text-slate-300 mb-3 bg-black/30 p-2.5 rounded-lg border border-white/5 font-mono leading-relaxed">
+                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br />
+                      <span className="text-white font-bold">⚠️ DİKKAT: ŞÜPHELİ YAZILIM / OYUNCU İNCELEMESİ</span><br />
+                      <span className="text-slate-400">&gt; Aşağıda belirtilen oyuncunun şüpheli hareketleri tespit edilmiş olup derhal sesli kanala katılması zorunludur!</span><br />
+                      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">🎯 ŞÜPHELİ OYUNCU</div>
+                        <div className="font-mono font-bold text-rose-400">&gt; ➔ `{hileForm.supheliOyuncu || 'Şüpheli Oyuncu'}`</div>
+                      </div>
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">👮 ÇAĞIRAN YETKİLİ</div>
+                        <div className="font-mono font-bold text-blue-400">&gt; ➔ `{hileForm.cagiranYetkili || 'Yetkili Ekibi'}`</div>
+                      </div>
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">⏱️ VERİLEN SÜRE</div>
+                        <div className="font-mono font-bold text-amber-400">&gt; ⏰ `{hileForm.sure || '5 Dakika'}` (Gecikme tolere edilmez)</div>
+                      </div>
+                      <div className="bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">🔊 BEKLENEN SESLİ ODA</div>
+                        <div className="font-mono font-bold text-emerald-400">&gt; 🎙️ `{hileForm.sesliOda || 'Hile Kontrol Bekleme Odası 1'}`</div>
+                      </div>
+                      <div className="sm:col-span-2 bg-[#1e1f22] p-2.5 rounded-lg border border-white/5">
+                        <div className="text-[10px] font-black text-slate-400 mb-1">🔍 İNCELEME & ŞÜPHE GEREKÇESİ</div>
+                        <pre className="text-yellow-300 bg-black/40 p-2 rounded font-mono text-[11px] whitespace-pre-wrap">{hileForm.supheSebebi || 'Tespit edilen şüpheli hareketler...'}</pre>
+                      </div>
+                      <div className="sm:col-span-2 bg-[#1e1f22] p-2.5 rounded-lg border border-white/5 text-[11px] text-rose-300">
+                        <div className="text-[10px] font-black text-slate-400 mb-0.5">🛑 PROTOKOL VE YAPTIRIM UYARISI</div>
+                        <p className="font-semibold leading-relaxed">
+                          ❗ 1. Verilen süre içerisinde odaya katılmayan oyuncu doğrudan <strong>KALICI OLARAK UZAKLAŞTIRILIR (Perma Ban)</strong>.<br />
+                          ❗ 2. Kontrol esnasında oyundan çıkmak veya reddetmek itiraf sayılır.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[10px] text-slate-400 pt-2 border-t border-white/5 font-mono">
+                      <span>Retro Roleplay V1 • RetroGuard Hile Kontrol ve Güvenlik Sistemi</span>
+                      <span>Şimdi (Discord Embed)</span>
+                    </div>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={isSending}
-                  className="w-full py-3.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-2xl bg-amber-600 hover:bg-amber-700 active:scale-[0.99] text-white font-black text-sm shadow-lg shadow-amber-600/20 transition-all flex items-center justify-center gap-2"
                 >
                   {isSending ? (
                     <>

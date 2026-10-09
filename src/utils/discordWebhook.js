@@ -1,11 +1,12 @@
 /**
  * Retro Roleplay V1 - Discord Webhook Bildirim Servisi
+ * Ultra-Kalın, Net, Belirgin ve Zengin Embed Mimarisi
  */
 
 export const CEZALOG_WEBHOOK_URL = "https://discord.com/api/webhooks/1558150655166652539/CIDgXjNCqfmMfrFDtEBaYMxVcIo4UiJ0F9gL6PbYoIDnvO4vvepYzXcsVxcl5JG9Qha7";
 
 /**
- * Ceza Logu Gönderme Fonksiyonu
+ * 1. CEZA LOGU BİLDİRİMİ (Ultra Kalın & Zengin Embed)
  */
 export async function sendCezaLogWebhook({
   sikayetEden,
@@ -15,55 +16,74 @@ export async function sendCezaLogWebhook({
   sebep,
   kanit = ""
 }) {
+  const cleanSikayet = sikayetEden?.trim() || "Yetkili Tespiti / Şikayetsiz";
+  const cleanCezalanan = cezalandirilan?.trim() || "Bilinmiyor";
+  const cleanYetkili = yetkili?.trim() || "Yetkili Ekibi";
+  const cleanSure = sure?.trim() || "Belirtilmedi";
+  const cleanSebep = sebep?.trim() || "Kural İhlali";
+  const cleanKanit = kanit?.trim();
+
   const embed = {
-    title: "⚖️ RETRO ROLEPLAY V1 — RESMİ CEZA KAYDI",
-    description: "Yetkili ekibi tarafından işlenen kural ihlali ve uygulanan yaptırım detayları aşağıdadır.",
-    color: 14753096, // #E11D48 Crimson Red
+    author: {
+      name: "RETRO ROLEPLAY V1 • RESMİ ADMİNİSTRASYON HEYETİ",
+      icon_url: "https://cdn-icons-png.flaticon.com/512/9422/9422956.png"
+    },
+    title: "⚖️ RESMİ CEZA VE DİSİPLİN YAPTIRIM KAYDI",
+    description: [
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "### 📌 KURAL İHLALİ VE DİSİPLİN İŞLEMİ",
+      "> **Sunucu kurallarına aykırı davranış sergileyen oyuncuya yetkili heyeti tarafından resmi yaptırım uygulanmıştır.**",
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    ].join("\n"),
+    color: 14427686, // #DC2626 - Canlı Ruby Kırmızı
     fields: [
       {
-        name: "👤 Şikayet Eden",
-        value: `\`${sikayetEden || 'Belirtilmedi'}\``,
+        name: "👤 ŞİKAYET EDEN",
+        value: `> ➔ **\`${cleanSikayet}\`**`,
         inline: true
       },
       {
-        name: "🚫 Cezalandırılan Oyuncu",
-        value: `\`${cezalandirilan || 'Bilinmiyor'}\``,
+        name: "🚫 CEZALANDIRILAN OYUNCU",
+        value: `> ➔ **\`${cleanCezalanan}\`**`,
         inline: true
       },
       {
-        name: "🛡️ Cezalandıran Yetkili",
-        value: `\`${yetkili || 'Admin'}\``,
+        name: "🛡️ CEZALANDIRAN YETKİLİ",
+        value: `> ➔ **\`${cleanYetkili}\`**`,
         inline: true
       },
       {
-        name: "⏱️ Ceza Süresi",
-        value: `**${sure || 'Belirtilmedi'}**`,
+        name: "⏳ CEZA SÜRESİ & TÜRÜ",
+        value: `> ➔ **\`${cleanSure}\`**`,
         inline: true
       },
       {
-        name: "📝 Ceza Sebebi",
-        value: `>>> ${sebep || 'Kural İhlali'}`,
+        name: "📝 CEZA SEBEBİ / GEREKÇE",
+        value: `\`\`\`fix\n${cleanSebep}\n\`\`\``,
         inline: false
       }
     ],
     footer: {
-      text: "Retro Roleplay V1 • Ceza Denetim & Sicil Sistemi",
-      icon_url: "https://api.iconify.design/lucide:shield-alert.svg"
+      text: "Retro Roleplay V1 • Disiplin ve Ceza Sicil Sistemi • RetroGuard",
+      icon_url: "https://cdn-icons-png.flaticon.com/512/9422/9422956.png"
     },
     timestamp: new Date().toISOString()
   };
 
-  if (kanit && kanit.trim()) {
+  if (cleanKanit) {
+    const isUrl = /^https?:\/\//i.test(cleanKanit);
     embed.fields.push({
-      name: "🔗 Kanıt / Ek Bilgi",
-      value: kanit.trim(),
+      name: "🔗 RESMİ KANIT / DOSYA BAĞLANTISI",
+      value: isUrl 
+        ? `> 🌐 **[Kanıt Dosyasını Görüntüle (Tıklayınız)](${cleanKanit})**\n> \`${cleanKanit}\``
+        : `> 📁 **\`${cleanKanit}\`**`,
       inline: false
     });
   }
 
   const payload = {
-    username: "Retro Roleplay V1 | Ceza Denetim",
-    avatar_url: "https://images-ext-1.discordapp.net/external/v5tQ8v_rJgP4H4eB/https/raw.githubusercontent.com/lucide-icons/lucide/main/icons/shield.svg",
+    username: "Retro Roleplay V1 | Ceza Sicil Denetim",
+    avatar_url: "https://cdn-icons-png.flaticon.com/512/9422/9422956.png",
     embeds: [embed]
   };
 
@@ -71,7 +91,7 @@ export async function sendCezaLogWebhook({
 }
 
 /**
- * Hile Kontrol Çağırma Fonksiyonu
+ * 2. HİLE KONTROL ÇAĞRISI (Ultra Kalın & Acil Bildirim)
  */
 export async function sendHileKontrolWebhook({
   supheliOyuncu,
@@ -80,46 +100,72 @@ export async function sendHileKontrolWebhook({
   sure = "5 Dakika",
   sesliOda = "Hile Kontrol Bekleme Odası 1"
 }) {
+  const cleanSupheli = supheliOyuncu?.trim() || "Şüpheli";
+  const cleanYetkili = cagiranYetkili?.trim() || "Yetkili Ekibi";
+  const cleanSure = sure?.trim() || "5 Dakika";
+  const cleanOda = sesliOda?.trim() || "Hile Kontrol Bekleme Odası 1";
+  const cleanSebep = supheSebebi?.trim() || "Şüpheli Yazılım / Hareket Tespiti";
+
   const embed = {
-    title: "🚨 ACİL HİLE KONTROL ÇAĞRISI — SCREENSHARE / KONTROL",
-    description: `**Dikkat:** Oyuncu şüpheli hareketler veya yazılım kullanımı nedeniyle resmi kontrole çağrılmıştır.\nBelirtilen süre içinde sesli odaya bağlanmayan oyuncu **Kalıcı Olarak Uzaklaştırılacaktır (CK / Perma Ban)**.`,
-    color: 15733526, // #EF4444 Alert Red
+    author: {
+      name: "RETROGUARD SHIELD • HİLE VE GÜVENLİK BİRİMİ",
+      icon_url: "https://cdn-icons-png.flaticon.com/512/564/564619.png"
+    },
+    title: "🚨 RETROGUARD • ACİL HİLE KONTROL VE SCREENSHARE ÇAĞRISI",
+    description: [
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "### ⚠️ DİKKAT: ŞÜPHELİ YAZILIM / OYUNCU İNCELEMESİ",
+      "> **Aşağıda belirtilen oyuncunun şüpheli hareketleri tespit edilmiş olup derhal sesli kanala katılması zorunludur!**",
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    ].join("\n"),
+    color: 16728064, // #FF3B30 - Apple Neon Hazard Red
     fields: [
       {
-        name: "🎯 Şüpheli Oyuncu",
-        value: `\`${supheliOyuncu}\``,
+        name: "🎯 ŞÜPHELİ OYUNCU",
+        value: `> ➔ **\`${cleanSupheli}\`**`,
         inline: true
       },
       {
-        name: "👮 Çağıran Yetkili",
-        value: `\`${cagiranYetkili}\``,
+        name: "👮 ÇAĞIRAN YETKİLİ",
+        value: `> ➔ **\`${cleanYetkili}\`**`,
         inline: true
       },
       {
-        name: "⏳ Verilen Süre",
-        value: `**${sure}** (Gecikme tolere edilmez)`,
+        name: "⏱️ VERİLEN SÜRE",
+        value: `> ⏰ **\`${cleanSure}\`** *(Gecikme tolere edilmez)*`,
         inline: true
       },
       {
-        name: "🔊 Beklenen Sesli Oda",
-        value: `\`${sesliOda}\``,
+        name: "🔊 BEKLENEN SESLİ ODA",
+        value: `> 🎙️ **\`${cleanOda}\`**`,
         inline: true
       },
       {
-        name: "⚠️ İnceleme / Şüphe Sebebi",
-        value: `>>> ${supheSebebi}`,
+        name: "🔍 İNCELEME & ŞÜPHE GEREKÇESİ",
+        value: `\`\`\`yaml\n${cleanSebep}\n\`\`\``,
+        inline: false
+      },
+      {
+        name: "🛑 PROTOKOL VE YAPTIRIM UYARISI",
+        value: [
+          ">>> ❗ **1. Verilen süre içerisinde odaya katılmayan oyuncu doğrudan KALICI OLARAK UZAKLAŞTIRILIR (Perma Ban).**",
+          "❗ **2. Kontrol esnasında oyundan çıkmak, bilgisayarı kapatmak veya kontrolü reddetmek itiraf sayılır.**",
+          "❗ **3. Ekran paylaşımı açılması ve yetkili talimatlarına harfiyen uyulması zorunludur.**"
+        ].join("\n"),
         inline: false
       }
     ],
     footer: {
-      text: "Retro Roleplay V1 • RetroGuard Hile Kontrol Birimi",
+      text: "Retro Roleplay V1 • RetroGuard Hile Kontrol ve Güvenlik Sistemi",
+      icon_url: "https://cdn-icons-png.flaticon.com/512/564/564619.png"
     },
     timestamp: new Date().toISOString()
   };
 
   const payload = {
-    content: `🚨 **DİKKAT:** \`${supheliOyuncu}\` adlı oyuncu **Hile Kontrolüne** çağrılmıştır! @everyone`,
+    content: `🚨 **[ACİL ÇAĞRI]** \`${cleanSupheli}\` adlı oyuncu **Hile Kontrolüne** çağrılmıştır! @everyone`,
     username: "RetroGuard | Hile Kontrol Birimi",
+    avatar_url: "https://cdn-icons-png.flaticon.com/512/564/564619.png",
     embeds: [embed]
   };
 
