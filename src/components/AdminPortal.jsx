@@ -478,7 +478,7 @@ export default function AdminPortal({ onBackToHome }) {
             {activeTab === 'hilekontrol' && (
               <form onSubmit={handleSendHileKontrol} className="space-y-5">
                 <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs text-amber-950 leading-relaxed">
-                  <strong>Acil Çağrı Sistemi:</strong> Şüpheli oyuncuyu screenshare / hile kontrol odasına çağırmak için bu formu kullanın. Discord kanalında @everyone etiketiyle uyarı oluşturulur.
+                  <strong>Acil Çağrı Sistemi:</strong> Şüpheli oyuncuyu screenshare / hile kontrol odasına çağırmak için bu formu kullanın. Discord kanalına resmi formatta acil bildirim iletilir.
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -568,7 +568,7 @@ export default function AdminPortal({ onBackToHome }) {
                   {/* Simulated Discord Embed */}
                   <div className="p-4 rounded-xl bg-[#2b2d31] border-l-4 border-[#ff3b30] shadow-sm">
                     <div className="text-[11px] text-amber-400 font-bold mb-2 font-mono">
-                      🚨 [ACİL ÇAĞRI] `{hileForm.supheliOyuncu || 'Şüpheli'}` hile kontrolüne çağrılmıştır! @everyone
+                      🚨 [ACİL ÇAĞRI] `{hileForm.supheliOyuncu || 'Şüpheli'}` hile kontrolüne çağrılmıştır!
                     </div>
 
                     <div className="flex items-center gap-2 mb-2 text-[11px] font-bold text-white/80">

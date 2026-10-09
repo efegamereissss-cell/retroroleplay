@@ -84,14 +84,15 @@ export async function sendCezaLogWebhook({
   const payload = {
     username: "Retro Roleplay V1 | Ceza Sicil Denetim",
     avatar_url: "https://cdn-icons-png.flaticon.com/512/9422/9422956.png",
-    embeds: [embed]
+    embeds: [embed],
+    allowed_mentions: { parse: [] }
   };
 
   return await executeWebhook(CEZALOG_WEBHOOK_URL, payload);
 }
 
 /**
- * 2. HİLE KONTROL ÇAĞRISI (Ultra Kalın & Acil Bildirim)
+ * 2. HİLE KONTROL ÇAĞRISI (Ultra Kalın & Acil Bildirim - Etiketsiz)
  */
 export async function sendHileKontrolWebhook({
   supheliOyuncu,
@@ -163,10 +164,11 @@ export async function sendHileKontrolWebhook({
   };
 
   const payload = {
-    content: `🚨 **[ACİL ÇAĞRI]** \`${cleanSupheli}\` adlı oyuncu **Hile Kontrolüne** çağrılmıştır! @everyone`,
+    content: `🚨 **[ACİL ÇAĞRI]** \`${cleanSupheli}\` adlı oyuncu **Hile Kontrolüne** çağrılmıştır!`,
     username: "RetroGuard | Hile Kontrol Birimi",
     avatar_url: "https://cdn-icons-png.flaticon.com/512/564/564619.png",
-    embeds: [embed]
+    embeds: [embed],
+    allowed_mentions: { parse: [] }
   };
 
   return await executeWebhook(CEZALOG_WEBHOOK_URL, payload);
