@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Gamepad2, 
@@ -15,14 +15,36 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { fetchLiveMtaServerStats } from '../utils/mtaQuery';
 
 export default function Hero({ onOpenAuth }) {
   const [copied, setCopied] = useState(false);
+  const [serverStats, setServerStats] = useState({
+    online: true,
+    players: 142,
+    maxPlayers: 200,
+    ping: 14,
+    name: "Retro Roleplay V1",
+    version: "MTA:SA 1.6+"
+  });
+
   const { showToast } = useAuth();
 
   const SERVER_IP = "45.143.11.113:22003";
   const DISCORD_URL = "https://discord.gg/dHfezJSG5f";
   const MTA_URI = `mtasa://${SERVER_IP}`;
+
+  // Canlı MTA Sunucu Verisi Çekici
+  useEffect(() => {
+    const updateStats = async () => {
+      const stats = await fetchLiveMtaServerStats();
+      if (stats) setServerStats(stats);
+    };
+
+    updateStats();
+    const interval = setInterval(updateStats, 20000); // 20 saniyede bir canlı yenile
+    return () => clearInterval(interval);
+  }, []);
 
   const handleCopyIp = () => {
     navigator.clipboard.writeText(SERVER_IP);
@@ -155,7 +177,7 @@ export default function Hero({ onOpenAuth }) {
                 <span>Sunucu Durumu</span>
               </div>
               <div className="text-sm sm:text-base font-bold text-white">
-                Aktif <span className="text-xs font-normal text-slate-400">(142 / 200)</span>
+                {serverStats.online ? 'Aktif' : 'Çevrimdışı'} <span className="text-xs font-normal text-slate-400">({serverStats.players} / {serverStats.maxPlayers})</span>
               </div>
               <div className="text-[11px] text-emerald-400/90 mt-1">Kesintisiz 99.9% Uptime</div>
             </div>
@@ -167,7 +189,7 @@ export default function Hero({ onOpenAuth }) {
                 <span>Ortalama Gecikme</span>
               </div>
               <div className="text-sm sm:text-base font-bold text-amber-300">
-                14 ms <span className="text-xs font-normal text-slate-400">(TR Lokasyon)</span>
+                {serverStats.ping} ms <span className="text-xs font-normal text-slate-400">(TR Lokasyon)</span>
               </div>
               <div className="text-[11px] text-slate-400 mt-1">DDoS Korumalı Hat</div>
             </div>
