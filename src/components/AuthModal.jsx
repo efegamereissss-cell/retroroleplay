@@ -94,7 +94,6 @@ export default function AuthModal() {
       return;
     }
 
-    // Validate Character Name format (Ad_Soyad)
     if (!validateCharacterName(regCharName)) {
       showToast('Karakter adı "Ad_Soyad" formatında olmalıdır (Örn: Thomas_Shelby)', 'error');
       return;
@@ -139,7 +138,6 @@ export default function AuthModal() {
     newOtp[index] = value;
     setOtpCode(newOtp);
 
-    // Auto focus next input
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-input-${index + 1}`);
       if (nextInput) nextInput.focus();
@@ -176,7 +174,7 @@ export default function AuthModal() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={() => setIsAuthModalOpen(false)}
-        className="absolute inset-0 bg-black/80 backdrop-blur-md"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
       />
 
       {/* Modal Dialog */}
@@ -185,25 +183,25 @@ export default function AuthModal() {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-lg rounded-3xl glass-panel border border-white/10 shadow-2xl overflow-hidden p-6 sm:p-8 backdrop-blur-3xl"
+        className="relative z-10 w-full max-w-lg rounded-3xl bg-white border border-slate-200 shadow-2xl overflow-hidden p-6 sm:p-8 text-[#1d1d1f]"
       >
         {/* Close Button */}
         <button
           onClick={() => setIsAuthModalOpen(false)}
-          className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
+          className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-black bg-slate-100 hover:bg-slate-200 transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Modal Header Tabs */}
         {authModalTab !== '2fa' ? (
-          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-white/[0.04] border border-white/5 mb-6">
+          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 mb-6">
             <button
               onClick={() => setAuthModalTab('login')}
               className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all ${
                 authModalTab === 'login'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-blue-700 shadow-sm'
+                  : 'text-slate-500 hover:text-black'
               }`}
             >
               Giriş Yap
@@ -212,8 +210,8 @@ export default function AuthModal() {
               onClick={() => setAuthModalTab('register')}
               className={`flex-1 py-2.5 text-xs font-bold rounded-xl transition-all ${
                 authModalTab === 'register'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-blue-700 shadow-sm'
+                  : 'text-slate-500 hover:text-black'
               }`}
             >
               Kayıt Ol (UCP)
@@ -221,11 +219,11 @@ export default function AuthModal() {
           </div>
         ) : (
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-3">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 mb-3">
               <Smartphone className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold text-white">İki Faktörlü Doğrulama (2FA)</h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <h3 className="text-xl font-bold text-[#1d1d1f]">İki Faktörlü Doğrulama (2FA)</h3>
+            <p className="text-xs text-slate-500 mt-1">
               Google Authenticator / Authy uygulamanızdaki 6 haneli kodu girin.
             </p>
           </div>
@@ -235,7 +233,7 @@ export default function AuthModal() {
         {authModalTab === 'login' && (
           <form onSubmit={handleLoginSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Kullanıcı Adı veya E-posta
               </label>
               <div className="relative">
@@ -246,13 +244,13 @@ export default function AuthModal() {
                   onChange={(e) => setLoginUsername(e.target.value)}
                   placeholder="Kullanıcı adınız"
                   required
-                  className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none text-white text-sm transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white focus:outline-none text-[#1d1d1f] text-sm transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Şifre
               </label>
               <div className="relative">
@@ -263,12 +261,12 @@ export default function AuthModal() {
                   onChange={(e) => setLoginPassword(e.target.value)}
                   placeholder="••••••••••••"
                   required
-                  className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none text-white text-sm transition-all"
+                  className="w-full pl-10 pr-10 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white focus:outline-none text-[#1d1d1f] text-sm transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowLoginPassword(!showLoginPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-black"
                 >
                   {showLoginPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -276,12 +274,12 @@ export default function AuthModal() {
             </div>
 
             <div className="flex items-center justify-between text-xs pt-1">
-              <label className="flex items-center gap-2 cursor-pointer text-slate-300">
+              <label className="flex items-center gap-2 cursor-pointer text-slate-600">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-white/20 bg-white/5 text-cyan-500 focus:ring-0"
+                  className="rounded border-slate-300 text-blue-600 focus:ring-0"
                 />
                 <span>Beni Hatırla</span>
               </label>
@@ -291,22 +289,22 @@ export default function AuthModal() {
                   e.preventDefault();
                   showToast('Şifre sıfırlama için Discord destek talebi açınız.', 'info');
                 }}
-                className="text-cyan-400 hover:underline"
+                className="text-blue-600 hover:underline font-medium"
               >
                 Şifremi Unuttum?
               </a>
             </div>
 
             {/* SQL Injection & CSRF Security badge */}
-            <div className="p-3 rounded-2xl bg-emerald-950/20 border border-emerald-500/20 flex items-center gap-2.5 text-[11px] text-emerald-300">
-              <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
+            <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center gap-2.5 text-[11px] text-emerald-800">
+              <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-600" />
               <span>Prepared Statement & CSRF Token korumalı güvenli oturum.</span>
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-xl shadow-cyan-500/25 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -327,7 +325,7 @@ export default function AuthModal() {
         {authModalTab === 'register' && (
           <form onSubmit={handleRegisterSubmit} className="space-y-3.5 max-h-[70vh] overflow-y-auto pr-1">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Kullanıcı Adı (UCP Girişi İçin)
               </label>
               <div className="relative">
@@ -338,13 +336,13 @@ export default function AuthModal() {
                   onChange={(e) => setRegUsername(e.target.value)}
                   placeholder="Kullanıcı Adı"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none text-white text-xs transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white focus:outline-none text-[#1d1d1f] text-xs transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 E-posta Adresi
               </label>
               <div className="relative">
@@ -355,32 +353,32 @@ export default function AuthModal() {
                   onChange={(e) => setRegEmail(e.target.value)}
                   placeholder="ornek@domain.com"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none text-white text-xs transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white focus:outline-none text-[#1d1d1f] text-xs transition-all"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-medium text-slate-300">
+                <label className="text-xs font-semibold text-slate-700">
                   İlk Karakter Adı
                 </label>
-                <span className="text-[10px] text-cyan-400 font-mono">Format: Ad_Soyad</span>
+                <span className="text-[10px] text-blue-600 font-mono">Format: Ad_Soyad</span>
               </div>
               <div className="relative">
                 <input
                   type="text"
                   value={regCharName}
                   onChange={(e) => setRegCharName(e.target.value)}
-                  placeholder="Örn: Arthur_Shelby"
+                  placeholder="Örn: Arthur_Morgan"
                   required
-                  className="w-full px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none text-white text-xs font-mono transition-all"
+                  className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white focus:outline-none text-[#1d1d1f] text-xs font-mono transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Şifre
               </label>
               <div className="relative">
@@ -391,12 +389,12 @@ export default function AuthModal() {
                   onChange={(e) => setRegPassword(e.target.value)}
                   placeholder="En az 8 karakter, sembol ve büyük harf"
                   required
-                  className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none text-white text-xs transition-all"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white focus:outline-none text-[#1d1d1f] text-xs transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowRegPassword(!showRegPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-black"
                 >
                   {showRegPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -404,19 +402,19 @@ export default function AuthModal() {
 
               {/* Password Strength Entropy Meter */}
               {regPassword && (
-                <div className="mt-2 p-2.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                <div className="mt-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-slate-400">Şifre Güvenlik Düzeyi:</span>
-                    <span className="font-bold text-white">{pwdStrength.label}</span>
+                    <span className="text-slate-500">Şifre Güvenlik Düzeyi:</span>
+                    <span className="font-bold text-[#1d1d1f]">{pwdStrength.label}</span>
                   </div>
-                  <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className={`h-full ${pwdStrength.color} transition-all duration-300`}
                       style={{ width: `${pwdStrength.score}%` }}
                     />
                   </div>
                   {pwdStrength.feedback.length > 0 && (
-                    <div className="text-[10px] text-amber-300/80">
+                    <div className="text-[10px] text-amber-700">
                       {pwdStrength.feedback.join(' • ')}
                     </div>
                   )}
@@ -425,7 +423,7 @@ export default function AuthModal() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Şifre Tekrarı
               </label>
               <input
@@ -434,20 +432,20 @@ export default function AuthModal() {
                 onChange={(e) => setRegConfirmPassword(e.target.value)}
                 placeholder="Şifrenizi doğrulayın"
                 required
-                className="w-full px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-white/10 focus:border-cyan-400 focus:outline-none text-white text-xs transition-all"
+                className="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 focus:bg-white focus:outline-none text-[#1d1d1f] text-xs transition-all"
               />
             </div>
 
             <div className="pt-1">
-              <label className="flex items-start gap-2 cursor-pointer text-xs text-slate-300">
+              <label className="flex items-start gap-2 cursor-pointer text-xs text-slate-600">
                 <input
                   type="checkbox"
                   checked={acceptRules}
                   onChange={(e) => setAcceptRules(e.target.checked)}
-                  className="mt-0.5 rounded border-white/20 bg-white/5 text-cyan-500 focus:ring-0"
+                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-0"
                 />
                 <span>
-                  Retro Roleplay V1 Hard RP kurallarını (FearRP, CK, PK vb.) okudum, anladım ve kabul ediyorum.
+                  Retro Roleplay V1 kurallarını okudum, anladım ve kabul ediyorum.
                 </span>
               </label>
             </div>
@@ -455,7 +453,7 @@ export default function AuthModal() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-xl shadow-cyan-500/25 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
@@ -464,7 +462,7 @@ export default function AuthModal() {
                 </>
               ) : (
                 <>
-                  <span>Kayıt Ol ve Başvuruyu Tamamla</span>
+                  <span>Kayıt Ol ve Girişi Tamamla</span>
                   <Sparkles className="w-4 h-4" />
                 </>
               )}
@@ -476,10 +474,8 @@ export default function AuthModal() {
         {authModalTab === '2fa' && (
           <form onSubmit={handleVerify2FaSubmit} className="space-y-6">
             
-            {/* Visual QR Code & Secret Simulation */}
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center gap-4">
-              {/* Mock QR SVG */}
-              <div className="w-20 h-20 bg-white p-1 rounded-xl shrink-0 flex items-center justify-center shadow">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-4">
+              <div className="w-20 h-20 bg-white p-1 rounded-xl shrink-0 flex items-center justify-center shadow-sm border border-slate-200">
                 <div className="grid grid-cols-5 gap-1 w-full h-full p-1 bg-black rounded">
                   <div className="bg-white col-span-2 row-span-2"></div>
                   <div className="bg-white col-span-1"></div>
@@ -493,12 +489,12 @@ export default function AuthModal() {
               </div>
 
               <div className="flex-1 text-left">
-                <div className="text-xs font-semibold text-slate-300">Gizli Anahtar (Secret):</div>
-                <div className="text-xs font-mono text-cyan-300 font-bold tracking-wider mt-0.5 select-all">
+                <div className="text-xs font-semibold text-slate-700">Gizli Anahtar (Secret):</div>
+                <div className="text-xs font-mono text-blue-600 font-bold tracking-wider mt-0.5 select-all">
                   RETRO-V1-9482-TOTP
                 </div>
-                <div className="text-[10px] text-slate-400 mt-1">
-                  Kalan Yenilenme Süresi: <span className="text-amber-400 font-bold font-mono">{otpTimer}s</span>
+                <div className="text-[10px] text-slate-500 mt-1">
+                  Kalan Yenilenme Süresi: <span className="text-amber-600 font-bold font-mono">{otpTimer}s</span>
                 </div>
               </div>
             </div>
@@ -516,13 +512,13 @@ export default function AuthModal() {
                     value={digit}
                     onChange={(e) => handleOtpChange(idx, e.target.value)}
                     onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                    className="w-11 sm:w-12 h-14 text-center text-xl font-bold font-mono text-white bg-white/[0.05] border border-white/15 rounded-2xl focus:border-cyan-400 focus:outline-none shadow-inner"
+                    className="w-11 sm:w-12 h-14 text-center text-xl font-bold font-mono text-[#1d1d1f] bg-slate-50 border border-slate-300 rounded-2xl focus:border-blue-600 focus:bg-white focus:outline-none shadow-sm"
                   />
                 ))}
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-400">
+            <div className="flex items-center justify-between text-xs text-slate-500">
               <span>Kod gelmedi mi?</span>
               <button
                 type="button"
@@ -530,7 +526,7 @@ export default function AuthModal() {
                   setOtpCode(['8', '9', '4', '1', '2', '0']);
                   showToast('Demo 2FA kodu dolduruldu: 894120', 'info');
                 }}
-                className="text-cyan-400 hover:underline font-medium"
+                className="text-blue-600 hover:underline font-medium"
               >
                 Demo Kodu Otomatik Doldur
               </button>
@@ -539,7 +535,7 @@ export default function AuthModal() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-white font-bold text-sm shadow-xl shadow-emerald-500/25 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3.5 rounded-2xl bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>

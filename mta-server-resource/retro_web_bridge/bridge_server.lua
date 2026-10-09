@@ -2,7 +2,8 @@
     ========================================================================
     RETRO ROLEPLAY V1 - MTA:SA TO WEB & UCP SYNCHRONIZATION BRIDGE (LUA)
     ========================================================================
-    VDS Sunucu MySQL Yapılandırması:
+    - Whitelist SİSTEMİ KALDIRILDI: Herkes doğrudan oyuna bağlanabilir!
+    - VDS MySQL 'retro' Veritabanı ile otomatik bakiye, envanter ve durum senkronizasyonu
     - Host: 127.0.0.1 (VDS İçi Yerel Bağlantı)
     - Kullanıcı: root
     - Şifre: 123456gg
@@ -10,7 +11,7 @@
     - Port: 3306
 ]]
 
-local DB_HOST = "127.0.0.1"      -- VDS içinde MTA ve MySQL aynı makinede olduğu için 127.0.0.1
+local DB_HOST = "127.0.0.1"      -- VDS içinde yerel bağlantı
 local DB_PORT = 3306             -- MySQL Portu
 local DB_NAME = "retro"          -- VDS Veritabanı Adı
 local DB_USER = "root"           -- MySQL Kullanıcı Adı
@@ -26,33 +27,19 @@ addEventHandler("onResourceStart", resourceRoot, function()
     dbConnection = dbConnect("mysql", string.format("dbname=%s;host=%s;port=%d;charset=utf8mb4", DB_NAME, DB_HOST, DB_PORT), DB_USER, DB_PASS, "share=1")
     
     if dbConnection then
-        outputServerLog("[RETRO WEB BRIDGE] BASARILI! 'retro' veritabani ile oyun baglantisi kuruldu.")
+        outputServerLog("[RETRO WEB BRIDGE] BASARILI! 'retro' veritabani ile oyun baglantisi kuruldu. Whitelist serbest.")
     else
         outputServerLog("[RETRO WEB BRIDGE] HATA! MySQL baglantisi basarisiz. VDS MySQL servisinin acik oldugundan emin olun.")
     end
 end)
 
--- 1. WHITELIST VE HARD RP KONTROLÜ (Oyuncu Bağlanırken)
+-- 1. OYUNCU GİRİŞİ (Serbest Giriş - Whitelist Yok)
 addEventHandler("onPlayerConnect", root, function(playerNick, playerIP, playerUsername, playerSerial, playerVersionNumber)
-    if not dbConnection then return end
-
-    -- Oyuncunun siteden onaylı olup olmadığını kontrol et (Prepared Statement)
-    local query = "SELECT role FROM users WHERE username = ? LIMIT 1"
-    dbQuery(function(qh)
-        local result = dbPoll(qh, 0)
-        if result and #result > 0 then
-            local user = result[1]
-            if user.role == "whitelist_pending" then
-                cancelEvent(true, "Retro Roleplay V1: Whitelist basvurunuz henuz incelemede! Lutfen Discord ve web sitemizden sonucu bekleyiniz.\nWeb: " .. WEBSITE_URL)
-            end
-        else
-            -- Sitede hesabı yoksa veya whitelist açılmamışsa
-            cancelEvent(true, "Retro Roleplay V1: Lutfen once web sitemizden UCP kaydi aciniz!\nWeb: " .. WEBSITE_URL)
-        end
-    end, dbConnection, playerNick)
+    outputServerLog(string.format("[RETRO WEB BRIDGE] Oyuncu baglaniyor: %s (IP: %s) - Giris serbest.", playerNick, playerIP))
+    -- Whitelist engellemesi kaldırıldı! Tüm oyuncular doğrudan giriş yapabilir.
 end)
 
--- 2. KARAKTER PARA / ENVENTER / OYNAMA SÜRESİ SENKRONİZASYONU (Oyuncu Çıkışında)
+-- 2. KARAKTER PARA / BAKİYE SENKRONİZASYONU (Oyuncu Çıkışında)
 addEventHandler("onPlayerQuit", root, function(quitType)
     local player = source
     if not dbConnection or isGuestAccount(getPlayerAccount(player)) then return end
@@ -66,7 +53,7 @@ addEventHandler("onPlayerQuit", root, function(quitType)
     outputServerLog(string.format("[RETRO WEB BRIDGE] %s karakterinin verileri 'retro' veritabanina kaydedildi.", charName))
 end)
 
--- 3. PERİYODİK WEBSİTE PING VE BİLDİRİMİ (Her 5 dakikada bir)
+-- 3. PERİYODİK CANLI DURUM LOGU (Her 5 dakikada bir)
 setTimer(function()
     local playerCount = #getElementsByType("player")
     local maxPlayers = getMaxPlayers()

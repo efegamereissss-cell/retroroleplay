@@ -7,25 +7,25 @@ export default function Footer() {
   const MTA_URI = `mtasa://${SERVER_IP}`;
 
   return (
-    <footer className="relative border-t border-white/10 bg-[#06070a] pt-16 pb-12 px-4 overflow-hidden">
+    <footer className="relative border-t border-slate-200 bg-[#f5f5f7] pt-16 pb-12 px-4 overflow-hidden text-[#1d1d1f]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 shadow-md">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-sm">
                 <Shield className="w-4 h-4 text-white" />
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg text-white font-mono tracking-tight">RETRO ROLEPLAY</span>
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">V1</span>
+                <span className="font-extrabold text-lg text-[#1d1d1f] font-mono tracking-tight">RETRO ROLEPLAY</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">V1</span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
+            <p className="text-xs text-[#6e6e73] max-w-sm leading-relaxed">
               Multi Theft Auto (MTA:SA) platformunda eşsiz, tavizsiz ve modern Hard Roleplay deneyimi.
-              Gerçekçi ekonomi, derin karakter hikayeleri ve sıfır toleranslı kural anlayışı.
+              Gerçekçi ekonomi, derin karakter hikayeleri ve serbest giriş özgürlüğü.
             </p>
 
             <div className="flex items-center gap-3 pt-2">
@@ -33,17 +33,17 @@ export default function Footer() {
                 href={DISCORD_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl glass-panel border border-[#5865F2]/40 bg-[#5865F2]/10 hover:bg-[#5865F2]/20 text-white text-xs font-semibold flex items-center gap-2 transition-all"
+                className="px-4 py-2 rounded-xl bg-[#5865F2] hover:bg-[#4752c4] text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
               >
                 <span>Discord Topluluğu</span>
-                <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-80" />
               </a>
 
               <a
                 href={MTA_URI}
-                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold flex items-center gap-2 border border-white/10 transition-all"
+                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#1d1d1f] text-xs font-semibold flex items-center gap-2 border border-slate-200 transition-all shadow-sm"
               >
-                <Gamepad2 className="w-3.5 h-3.5 text-cyan-400" />
+                <Gamepad2 className="w-3.5 h-3.5 text-blue-600" />
                 <span>Oyuna Bağlan</span>
               </a>
             </div>
@@ -51,37 +51,37 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-3">
-            <h5 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+            <h5 className="text-xs font-bold text-[#1d1d1f] uppercase tracking-wider font-mono">
               Hızlı Erişim
             </h5>
-            <ul className="space-y-2 text-xs text-slate-400">
+            <ul className="space-y-2 text-xs text-[#6e6e73]">
               <li>
-                <a href="#hero" className="hover:text-cyan-400 transition-colors">Ana Sayfa</a>
+                <a href="#hero" className="hover:text-blue-600 transition-colors">Ana Sayfa</a>
               </li>
               <li>
-                <a href="#systems" className="hover:text-cyan-400 transition-colors">Sunucu Sistemleri</a>
+                <a href="#systems" className="hover:text-blue-600 transition-colors">Sunucu Sistemleri</a>
               </li>
               <li>
-                <a href="#rules" className="hover:text-cyan-400 transition-colors">Hard RP Kuralları</a>
+                <a href="#rules" className="hover:text-blue-600 transition-colors">Hard RP Kuralları</a>
               </li>
               <li>
-                <a href="#security" className="hover:text-cyan-400 transition-colors">Güvenlik Mimarisi</a>
+                <a href="#security" className="hover:text-blue-600 transition-colors">Güvenlik Mimarisi</a>
               </li>
             </ul>
           </div>
 
           {/* Server Details */}
           <div className="space-y-3">
-            <h5 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+            <h5 className="text-xs font-bold text-[#1d1d1f] uppercase tracking-wider font-mono">
               Bağlantı Bilgisi
             </h5>
-            <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-              <div className="text-[11px] text-slate-400">Sunucu Adresi:</div>
-              <div className="font-mono text-cyan-300 font-bold text-xs select-all">
+            <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1">
+              <div className="text-[11px] text-slate-500">Sunucu Adresi:</div>
+              <div className="font-mono text-blue-600 font-bold text-xs select-all">
                 {SERVER_IP}
               </div>
-              <div className="text-[10px] text-emerald-400 pt-1">
-                Port: 22003 (MTA Varsayılan)
+              <div className="text-[10px] text-emerald-700 font-medium pt-1">
+                Port: 22003 (MTA Varsayılan) • Serbest Giriş
               </div>
             </div>
           </div>
@@ -89,12 +89,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="pt-8 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#6e6e73]">
           <div>
             © 2026 Retro Roleplay V1. Tüm hakları saklıdır.
           </div>
           <div className="flex items-center gap-1 text-[11px]">
-            <span>Apple UI standartları ve sıfır tavizli güvenlik ile hazırlandı.</span>
+            <span>Apple UI standartları, beyaz tema ve sıfır tavizli güvenlik ile hazırlandı.</span>
           </div>
         </div>
 

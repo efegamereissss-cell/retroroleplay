@@ -28,7 +28,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#08090d] text-slate-100 flex flex-col relative selection:bg-cyan-500/30 selection:text-white">
+    <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col relative selection:bg-blue-500/20 selection:text-blue-600">
       {/* Toast Notification Container */}
       <Toast />
 

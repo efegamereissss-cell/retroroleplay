@@ -3,10 +3,35 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [authToken, setAuthToken] = useState(null);
+  // Varsayılan olarak aktif ve kayıtlı kullanıcı profili
+  const defaultRegisteredUser = {
+    id: 'RETRO-8941',
+    username: 'Arthur_Morgan',
+    email: 'arthur@retrorp.com',
+    characterName: 'Arthur_Morgan',
+    role: 'Kayıtlı Oyuncu (Aktif)',
+    cash: 12500,
+    bank: 84200,
+    playTime: '148 Saat',
+    twoFactorEnabled: true,
+    registeredAt: 'Aktif Oyuncu',
+    characters: [
+      { name: 'Arthur_Morgan', level: 12, job: 'LSPD Dedektif', status: 'Aktif' },
+      { name: 'Marcus_Vance', level: 6, job: 'Sivil / Mekanik', status: 'Aktif' },
+    ],
+    vehicles: [
+      { model: 'Declasse Sabre Turbo', plate: '34 RRP 86', status: 'Garajda' },
+      { model: 'Bravado Buffalo S', plate: '06 LPD 01', status: 'Garajda' },
+    ],
+    securityLogs: [
+      { ip: '45.143.11.113', date: 'Bugün 15:42', device: 'Windows 11 (VDS Aktif)', status: 'Başarılı' },
+    ],
+  };
+
+  const [user, setUser] = useState(defaultRegisteredUser);
+  const [authToken, setAuthToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.retro_simulated_token');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authModalTab, setAuthModalTab] = useState('login'); // 'login' | 'register' | '2fa'
+  const [authModalTab, setAuthModalTab] = useState('login');
   const [is2FaPending, setIs2FaPending] = useState(false);
   const [pendingUser, setPendingUser] = useState(null);
   const [toasts, setToasts] = useState([]);
@@ -20,108 +45,57 @@ export function AuthProvider({ children }) {
     }, duration);
   };
 
-  // Simüle edilmiş başlangıç oturum kontrolü
-  useEffect(() => {
-    const storedSession = localStorage.getItem('retro_session_user');
-    if (storedSession) {
-      try {
-        const parsed = JSON.parse(storedSession);
-        setUser(parsed);
-        setAuthToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.retro_simulated_token');
-      } catch (e) {
-        console.error('Session parse error', e);
-      }
-    }
-  }, []);
-
   // Giriş Yap fonksiyonu
   const login = async (username, password, rememberMe = false) => {
-    // Gerçek dünyada backend API'ye güvenli HTTPS POST gönderilir
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    // Demo kullanıcı bilgileri
-    const mockUser = {
-      id: 'RETRO-8941',
+    const loggedUser = {
+      ...defaultRegisteredUser,
       username: username || 'Arthur_Morgan',
-      email: `${(username || 'retro_player').toLowerCase()}@domain.com`,
-      characterName: username.includes('_') ? username : 'Alexander_Pierce',
-      role: 'Oyuncu (Whitelist Onaylı)',
-      cash: 12500,
-      bank: 84200,
-      playTime: '148 Saat',
-      twoFactorEnabled: true,
-      registeredAt: '14.02.2026',
-      characters: [
-        { name: 'Alexander_Pierce', level: 12, job: 'LSPD Dedektif', status: 'Aktif' },
-        { name: 'Marcus_Vance', level: 6, job: 'Sivil / Mekanik', status: 'Pasif' },
-      ],
-      vehicles: [
-        { model: 'Declasse Sabre Turbo', plate: '34 RRP 86', status: 'Garajda' },
-        { model: 'Bravado Buffalo S', plate: '06 LPD 01', status: 'Bağlı' },
-      ],
-      securityLogs: [
-        { ip: '45.143.11.113', date: 'Bugün 15:42', device: 'Windows 11 (Chrome 128)', status: 'Başarılı' },
-        { ip: '185.12.98.4', date: 'Dün 21:10', device: 'Windows 11 (Chrome 128)', status: 'Başarılı' },
-      ],
+      characterName: username.includes('_') ? username : 'Arthur_Morgan',
     };
 
-    // Eğer 2FA aktifse 2FA adımını aç
-    if (mockUser.twoFactorEnabled) {
-      setPendingUser(mockUser);
-      setIs2FaPending(true);
-      setAuthModalTab('2fa');
-      showToast('2FA İki Faktörlü Doğrulama kodu bekleniyor...', 'info');
-      return { require2Fa: true };
-    }
-
-    completeLogin(mockUser, rememberMe);
+    completeLogin(loggedUser, rememberMe);
     return { success: true };
   };
 
   // 2FA Tamamlama
   const verify2Fa = async (code) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 400));
     if (code.length === 6) {
-      if (pendingUser) {
-        completeLogin(pendingUser, true);
-        setIs2FaPending(false);
-        setPendingUser(null);
-        showToast('2FA Güvenlik Doğrulaması Başarılı! Hoş geldiniz.', 'success');
-        return true;
-      }
+      completeLogin(defaultRegisteredUser, true);
+      setIs2FaPending(false);
+      showToast('2FA Doğrulaması Başarılı! Hoş geldiniz.', 'success');
+      return true;
     } else {
-      showToast('Hatalı 2FA kodu. Lütfen 6 haneli kodu kontrol edin.', 'error');
+      showToast('Hatalı 2FA kodu.', 'error');
       return false;
     }
   };
 
   const completeLogin = (userData, remember = false) => {
     setUser(userData);
-    const mockJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.retro_simulated_secure_token';
-    setAuthToken(mockJwt);
-    if (remember) {
-      localStorage.setItem('retro_session_user', JSON.stringify(userData));
-    }
+    setAuthToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.retro_simulated_secure_token');
     setIsAuthModalOpen(false);
-    showToast(`Oturum açıldı: ${userData.username}`, 'success');
+    showToast(`Oturum aktif: ${userData.username}`, 'success');
   };
 
-  // Kayıt Ol fonksiyonu
+  // Kayıt Ol fonksiyonu (Whitelist yok - anında aktif hesap)
   const register = async (formData) => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 600));
     const newUser = {
       id: `RETRO-${Math.floor(1000 + Math.random() * 9000)}`,
       username: formData.username,
       email: formData.email,
       characterName: formData.characterName,
-      role: 'Başvuru Beklemede (Whitelist İncelemede)',
+      role: 'Kayıtlı Oyuncu (Aktif)',
       cash: 5000,
       bank: 15000,
-      playTime: '0 Saat (Yeni Oyuncu)',
+      playTime: '0 Saat',
       twoFactorEnabled: false,
       registeredAt: new Date().toLocaleDateString('tr-TR'),
       characters: [
-        { name: formData.characterName, level: 1, job: 'İşsiz / Vatandaş', status: 'Beklemede' },
+        { name: formData.characterName, level: 1, job: 'Vatandaş', status: 'Aktif' },
       ],
       vehicles: [],
       securityLogs: [
@@ -130,7 +104,7 @@ export function AuthProvider({ children }) {
     };
 
     completeLogin(newUser, true);
-    showToast('Hesabınız ve Hard RP Karakter başvurunuz oluşturuldu!', 'success');
+    showToast('Hesabınız oluşturuldu ve oyuna giriş için aktif edildi!', 'success');
     return { success: true };
   };
 
@@ -138,8 +112,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     setAuthToken(null);
-    localStorage.removeItem('retro_session_user');
-    showToast('Oturum sonlandırıldı. Güvenli çıkış yapıldı.', 'info');
+    showToast('Oturum sonlandırıldı.', 'info');
   };
 
   return (

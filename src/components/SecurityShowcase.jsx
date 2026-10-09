@@ -10,8 +10,6 @@ import {
   CheckCircle2, 
   Terminal, 
   AlertOctagon,
-  Cpu,
-  Layers,
   Sparkles
 } from 'lucide-react';
 
@@ -96,7 +94,7 @@ if (!verified) {
   };
 
   return (
-    <section id="security" className="relative py-28 px-4 max-w-7xl mx-auto">
+    <section id="security" className="relative py-28 px-4 max-w-7xl mx-auto bg-transparent">
       
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-16">
@@ -104,9 +102,9 @@ if (!verified) {
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border border-white/10 text-xs font-semibold text-emerald-300 mb-4"
+          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4"
         >
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
           <span>SIFIR TAVİZLİ SİBER GÜVENLİK STANDARTLARI</span>
         </motion.div>
 
@@ -114,10 +112,10 @@ if (!verified) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4"
+          className="text-3xl sm:text-5xl font-black text-[#1d1d1f] tracking-tight mb-4"
         >
           Güvenlik Bir Özellik Değil, <br />
-          <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 bg-clip-text text-transparent">
             Mimarinin Ta Kendisidir.
           </span>
         </motion.h2>
@@ -126,7 +124,7 @@ if (!verified) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-slate-400 text-sm sm:text-base leading-relaxed"
+          className="text-[#6e6e73] text-sm sm:text-base leading-relaxed"
         >
           Hesabınız, karakterleriniz ve emeğiniz en modern kurumsal güvenlik standartlarıyla korunur. 
           SQLi, XSS ve CSRF tehditlerine karşı çok katmanlı savunma kalkanı.
@@ -144,29 +142,29 @@ if (!verified) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.07 }}
-              className="p-6 rounded-3xl glass-panel border border-white/10 hover:border-emerald-500/30 transition-all duration-300 group flex flex-col justify-between"
+              className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)] hover:border-emerald-500/40 transition-all duration-300 group flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                  <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-slate-300">
+                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700">
                     {feat.tag}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                <h3 className="text-lg font-bold text-[#1d1d1f] mb-2 group-hover:text-emerald-700 transition-colors">
                   {feat.title}
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                <p className="text-xs text-[#6e6e73] leading-relaxed mb-4">
                   {feat.desc}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs">
-                <span className="text-slate-400">Koruma Seviyesi:</span>
-                <span className="font-semibold text-emerald-400 font-mono flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="text-slate-500">Koruma Seviyesi:</span>
+                <span className="font-semibold text-emerald-700 font-mono flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   {feat.benefit}
                 </span>
               </div>
@@ -180,15 +178,15 @@ if (!verified) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="rounded-3xl glass-panel border border-white/10 shadow-2xl overflow-hidden"
+        className="rounded-3xl bg-[#0f172a] border border-slate-800 shadow-2xl overflow-hidden"
       >
         {/* Terminal Header */}
-        <div className="px-6 py-4 bg-white/[0.02] border-b border-white/10 flex items-center justify-between flex-wrap gap-4">
+        <div className="px-6 py-4 bg-slate-900 border-b border-slate-800 flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-rose-500/80"></span>
-              <span className="w-3 h-3 rounded-full bg-amber-500/80"></span>
-              <span className="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+              <span className="w-3 h-3 rounded-full bg-rose-500"></span>
+              <span className="w-3 h-3 rounded-full bg-amber-500"></span>
+              <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
             </div>
             <span className="ml-3 text-xs font-mono text-slate-300 flex items-center gap-2">
               <Terminal className="w-3.5 h-3.5 text-cyan-400" />
@@ -202,7 +200,7 @@ if (!verified) {
               onClick={() => setActiveCodeTab('sqli')}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-medium transition-all ${
                 activeCodeTab === 'sqli'
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                  ? 'bg-blue-600 text-white'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -212,7 +210,7 @@ if (!verified) {
               onClick={() => setActiveCodeTab('jwt')}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-medium transition-all ${
                 activeCodeTab === 'jwt'
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                  ? 'bg-blue-600 text-white'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -222,7 +220,7 @@ if (!verified) {
               onClick={() => setActiveCodeTab('twofa')}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-medium transition-all ${
                 activeCodeTab === 'twofa'
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                  ? 'bg-blue-600 text-white'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -232,21 +230,21 @@ if (!verified) {
         </div>
 
         {/* Terminal Body */}
-        <div className="p-6 bg-[#06080d]/90 font-mono text-xs sm:text-sm text-cyan-300 leading-relaxed overflow-x-auto">
+        <div className="p-6 font-mono text-xs sm:text-sm text-cyan-300 leading-relaxed overflow-x-auto">
           <pre className="text-slate-300">
             <code>{codeSnippets[activeCodeTab]}</code>
           </pre>
         </div>
 
         {/* Terminal Footer CTA */}
-        <div className="px-6 py-4 bg-white/[0.01] border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="px-6 py-4 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-xs text-slate-400 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-cyan-400" />
             <span>Kayıt ve giriş sisteminde tüm bu güvenlik kontrolleri aktiftir.</span>
           </div>
           <button
             onClick={onOpenAuth}
-            className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/15 transition-all shadow-md hover:border-cyan-400/40"
+            className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-all shadow-md"
           >
             Güvenli Giriş & Kayıt Sistemini Dene
           </button>
