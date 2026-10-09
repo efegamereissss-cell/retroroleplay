@@ -1,4 +1,0 @@
-<meta>
-    <info author="Retro Roleplay Dev Team" version="1.0.0" name="Retro Web & UCP Bridge" type="script" />
-    <script src="bridge_server.lua" type="server" />
-</meta>
