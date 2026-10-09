@@ -12,24 +12,23 @@ import LeftSidebar from './components/LeftSidebar';
 import AdminPortal from './components/AdminPortal';
 
 export default function App() {
+  // Sadece adres çubuğunda /admins (veya #admins) yazıldığında admin paneli açılır!
   const [isAdminView, setIsAdminView] = useState(() => {
-    return window.location.pathname === '/admins' || window.location.pathname.startsWith('/admin') || window.location.hash === '#admins';
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    return path === '/admins' || path.startsWith('/admin') || hash === '#admins';
   });
 
   useEffect(() => {
     const handlePopState = () => {
-      setIsAdminView(window.location.pathname === '/admins' || window.location.pathname.startsWith('/admin') || window.location.hash === '#admins');
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      setIsAdminView(path === '/admins' || path.startsWith('/admin') || hash === '#admins');
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
-
-  const navigateToAdmin = () => {
-    window.history.pushState({}, '', '/admins');
-    setIsAdminView(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const navigateToHome = () => {
     window.history.pushState({}, '', '/');
@@ -46,17 +45,17 @@ export default function App() {
       <Toast />
 
       {isAdminView ? (
-        /* KeyAuth Admin Portal (/admins) */
+        /* Gizli KeyAuth Admin Portal (/admins) */
         <AdminPortal onBackToHome={navigateToHome} />
       ) : (
-        /* Main Showcase Website */
+        /* Herkese Açık Apple Vitrin Sitesi (Admin paneline dair hiçbir buton veya ipucu bulunmaz) */
         <div className="min-h-screen bg-white text-[#1d1d1f] flex flex-col relative selection:bg-blue-500/20 selection:text-blue-600">
           
           {/* Floating Left Soft Drawer Menu */}
-          <LeftSidebar onNavigateAdmin={navigateToAdmin} />
+          <LeftSidebar />
 
           {/* Floating Apple White Navbar */}
-          <Navbar onNavigateAdmin={navigateToAdmin} />
+          <Navbar />
 
           {/* Main Sections */}
           <main className="flex-1">

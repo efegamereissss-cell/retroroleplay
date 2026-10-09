@@ -6,18 +6,16 @@ import {
   Layers, 
   BookOpen, 
   ShieldCheck, 
-  Lock, 
   ExternalLink, 
   Copy, 
   Check, 
   ChevronRight, 
   ChevronLeft,
-  Sparkles,
-  Crown
+  Sparkles
 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
-export default function LeftSidebar({ onNavigateAdmin }) {
+export default function LeftSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const { showToast } = useToast();
@@ -75,18 +73,6 @@ export default function LeftSidebar({ onNavigateAdmin }) {
           <Gamepad2 className="w-4 h-4" />
           <span className="absolute left-full ml-3 px-2.5 py-1 rounded-xl bg-slate-900 text-white text-[11px] font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md">
             Oyuna Bağlan
-          </span>
-        </button>
-
-        {/* Quick Admin Portal Button */}
-        <button
-          onClick={onNavigateAdmin}
-          className="p-3 rounded-full bg-purple-50 text-purple-600 hover:bg-purple-600 hover:text-white transition-all group relative shadow-sm"
-          title="Admin Portalı"
-        >
-          <Crown className="w-4 h-4" />
-          <span className="absolute left-full ml-3 px-2.5 py-1 rounded-xl bg-purple-950 text-white text-[11px] font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-md">
-            Yetkili Paneli (/admins)
           </span>
         </button>
 
@@ -174,32 +160,6 @@ export default function LeftSidebar({ onNavigateAdmin }) {
                     );
                   })}
                 </div>
-
-                {/* Dedicated Admin Portal Link */}
-                <div className="p-3.5 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200/80 mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <Crown className="w-4 h-4 text-purple-600" />
-                      <span className="text-xs font-bold text-purple-950 font-mono">YETKİLİ MERKEZİ</span>
-                    </div>
-                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-600 text-white font-mono">
-                      KeyAuth v1.0
-                    </span>
-                  </div>
-                  <p className="text-xs text-purple-800/80 mb-3 leading-relaxed">
-                    Cezalog ve acil hile kontrol Discord entegrasyonuna lisans anahtarınızla erişin.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      onNavigateAdmin();
-                    }}
-                    className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2"
-                  >
-                    <Lock className="w-3.5 h-3.5" />
-                    <span>Admin Paneline Gir (/admins)</span>
-                  </button>
-                </div>
               </div>
 
               {/* Drawer Footer Actions */}
@@ -223,7 +183,7 @@ export default function LeftSidebar({ onNavigateAdmin }) {
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-100 hover:bg-[#5865F2] hover:text-white text-slate-800 font-semibold text-xs transition-all"
                 >
                   <span>Discord Topluluğu</span>
-                  <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                  <ExternalLink className="w-4 h-4 opacity-70" />
                 </a>
               </div>
             </motion.div>
