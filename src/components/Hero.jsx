@@ -7,17 +7,13 @@ import {
   ShieldCheck, 
   Sparkles, 
   ChevronRight, 
-  Radio, 
-  Terminal, 
-  Cpu, 
-  Layers, 
   Zap,
   ArrowUpRight
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { fetchLiveMtaServerStats } from '../utils/mtaQuery';
 
-export default function Hero({ onOpenAuth }) {
+export default function Hero() {
   const [copied, setCopied] = useState(false);
   const [serverStats, setServerStats] = useState({
     online: true,
@@ -28,7 +24,7 @@ export default function Hero({ onOpenAuth }) {
     version: "MTA:SA 1.6+"
   });
 
-  const { showToast } = useAuth();
+  const { showToast } = useToast();
 
   const SERVER_IP = "45.143.11.113:22003";
   const DISCORD_URL = "https://discord.gg/dHfezJSG5f";
@@ -108,7 +104,7 @@ export default function Hero({ onOpenAuth }) {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl text-base sm:text-lg md:text-xl text-[#6e6e73] font-normal leading-relaxed mb-10 text-balance"
         >
-          Multi Theft Auto platformunda yapay bekleme listeleri olmadan, dengeli piyasa ekonomisi, 
+          Multi Theft Auto platformunda kayıt zorunluluğu olmadan, dengeli piyasa ekonomisi, 
           derin karakter hikayeleri ve sıfır toleranslı kural anlayışıyla inşa edilmiş en prestijli Hard RP sunucusu.
         </motion.p>
 

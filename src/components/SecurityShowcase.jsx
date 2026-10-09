@@ -10,11 +10,22 @@ import {
   CheckCircle2, 
   Terminal, 
   AlertOctagon,
-  Sparkles
+  Sparkles,
+  Gamepad2
 } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
 
-export default function SecurityShowcase({ onOpenAuth }) {
+export default function SecurityShowcase() {
   const [activeCodeTab, setActiveCodeTab] = useState('sqli');
+  const { showToast } = useToast();
+
+  const SERVER_IP = "45.143.11.113:22003";
+
+  const handleConnect = () => {
+    navigator.clipboard.writeText(SERVER_IP);
+    showToast(`Sunucu IP panoya kopyalandı: ${SERVER_IP}`, 'success');
+    window.location.href = `mtasa://${SERVER_IP}`;
+  };
 
   const securityFeatures = [
     {
@@ -32,32 +43,32 @@ export default function SecurityShowcase({ onOpenAuth }) {
       benefit: 'Sıfır Script Sızıntısı'
     },
     {
-      title: 'CSRF Token & SameSite Cookie',
+      title: 'DDoS & Ağ Filtreleme',
       icon: Lock,
-      tag: 'CWE-352 Korumalı',
-      desc: 'Oturum çerezleri SameSite=Strict ve HttpOnly bayraklarıyla saklanır. Durum değiştiren her API çağrısı kriptografik çift gönderim Anti-CSRF tokeni doğrular.',
-      benefit: 'İzinsiz İstek Koruması'
+      tag: 'Volumetric Korumalı',
+      desc: 'VDS sunucumuz katman 4 (L4) ve katman 7 (L7) anti-DDoS filtre donanımlarıyla korunur. Düşük gecikmeli ve kopmasız oyun deneyimi.',
+      benefit: 'Kesintisiz Uptime'
     },
     {
-      title: '2FA (TOTP İki Faktörlü Doğrulama)',
+      title: 'RetroGuard Kernel Anti-Cheat',
       icon: Key,
-      tag: 'RFC 6238 Standartı',
-      desc: 'Google Authenticator ve Authy ile uyumlu, zaman tabanlı tek kullanımlık şifreler (TOTP). Şifreniz sızsa dahi hesabınız 2. katmanda güvendedir.',
-      benefit: 'Donanım/Yazılım Token'
+      tag: 'MTA 1.6+ Entegre',
+      desc: 'Bellek manipülasyonu, hız hileleri, aimbot ve enjektörleri anında tespit eden özel client-side ve server-side hile koruması.',
+      benefit: 'Adil Rol Ortamı'
     },
     {
-      title: 'Kriptografik Şifreleme (bcrypt/Argon2)',
+      title: 'Kriptografik Güvenlik (Argon2/bcrypt)',
       icon: Fingerprint,
-      tag: '12 Salt Rounds',
-      desc: 'Kullanıcı şifreleri asla düz metin (plaintext) olarak tutulmaz. Hesaplama maliyeti yüksek hash fonksiyonlarıyla rainbow table saldırıları etkisiz kılınır.',
-      benefit: 'Geri Döndürülemez Hash'
+      tag: 'Yüksek Entropi',
+      desc: 'Oyun içi veri tabanı şifreleme ve oyuncu veri bütünlüğü modern kriptografik hash fonksiyonları ile güvenceye alınmıştır.',
+      benefit: 'Veri Bütünlüğü'
     },
     {
       title: 'Brute-Force & Rate Limiting',
       icon: AlertOctagon,
-      tag: 'DDoS & Sözlük Koruması',
-      desc: 'IP ve hesap bazlı istek sınırlandırma mimarisi. 5 başarısız denemenin ardından geçici bloklama ve IP seviyesinde soğuma periyodu uygulanır.',
-      benefit: 'Otomatik IP İzolasyonu'
+      tag: 'Ağ İzolasyonu',
+      desc: 'Şüpheli paket akışları ve flood denemelerine karşı IP bazlı akıllı paket sınırlandırma ve otomatik geçici ban protokolü.',
+      benefit: 'Otomatik Kalkan'
     }
   ];
 
@@ -65,31 +76,23 @@ export default function SecurityShowcase({ onOpenAuth }) {
     sqli: `// Retro Roleplay V1 - Parametreli SQL Prepared Statement Mimarisi
 // SQL Injection saldırılarını matematiksel olarak imkansız kılar.
 const [rows] = await db.execute(
-  'SELECT id, username, password_hash, two_factor_secret, role FROM users WHERE username = ? LIMIT 1',
-  [sanitizedUsername] // Parametre doğrudan ayrıştırılır, kod olarak çalıştırılamaz.
+  'SELECT id, username, cash, bank, role FROM characters WHERE character_name = ? LIMIT 1',
+  [sanitizedCharacterName] // Parametre ayrıştırılır, kod olarak çalıştırılamaz.
 );`,
-    jwt: `// JWT Tabanlı Yetkilendirme & HttpOnly Çerez Yönetimi
-// XSS ile token çalınmasını engellemek için HttpOnly ve SameSite zorunludur.
-const accessToken = jwt.sign(
-  { uid: user.id, username: user.username, role: user.role },
-  process.env.JWT_ACCESS_SECRET,
-  { expiresIn: '15m', algorithm: 'HS256' }
-);
-res.cookie('retro_refresh', refreshToken, {
-  httpOnly: true,
-  secure: true, // Yalnızca HTTPS
-  sameSite: 'strict',
-  maxAge: 7 * 24 * 60 * 60 * 1000
-});`,
-    twofa: `// 2FA TOTP Doğrulama Katmanı (RFC 6238)
-const verified = speakeasy.totp.verify({
-  secret: user.two_factor_secret,
-  encoding: 'base32',
-  token: clientOtpCode,
-  window: 1 // +/- 30 saniye saat sapma payı
+    jwt: `// Sunucu Veri Güvenliği & Network İzolasyonu
+// Şüpheli paketleri sınırlandırıp DDoS akışını engeller.
+const isPacketLegit = verifyMtaPacketSignature(incomingBuffer, clientIp);
+if (!isPacketLegit) {
+  dropPacketAndBlacklist(clientIp, { duration: '15m' });
+}`,
+    twofa: `// RetroGuard Kernel Anti-Cheat Doğrulama Katmanı
+const verified = verifyClientIntegrity({
+  clientMemoryChecksum: player.checksum,
+  luaEngineHash: player.engineHash,
+  networkLatency: player.ping
 });
 if (!verified) {
-  throw new SecurityException("2FA Kodu Hatalı!");
+  kickPlayer(player, "RetroGuard: Yetkisiz dosya degisikligi tespit edildi!");
 }`
   };
 
@@ -126,8 +129,8 @@ if (!verified) {
           viewport={{ once: true }}
           className="text-[#6e6e73] text-sm sm:text-base leading-relaxed"
         >
-          Hesabınız, karakterleriniz ve emeğiniz en modern kurumsal güvenlik standartlarıyla korunur. 
-          SQLi, XSS ve CSRF tehditlerine karşı çok katmanlı savunma kalkanı.
+          Sunucumuz, karakterleriniz ve rol emeğiniz en modern kurumsal güvenlik standartlarıyla korunur. 
+          RetroGuard Anti-Cheat ve DDoS kalkanı ile kesintisiz Hard RP.
         </motion.p>
       </div>
 
@@ -190,7 +193,7 @@ if (!verified) {
             </div>
             <span className="ml-3 text-xs font-mono text-slate-300 flex items-center gap-2">
               <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-              security-kernel/auth-defense-controller.js
+              security-kernel/retro-defense-engine.js
             </span>
           </div>
 
@@ -204,7 +207,7 @@ if (!verified) {
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              SQL Injection Önlemi
+              SQL Injection Koruması
             </button>
             <button
               onClick={() => setActiveCodeTab('jwt')}
@@ -214,7 +217,7 @@ if (!verified) {
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              JWT & HttpOnly CSRF
+              Anti-DDoS Ağ Filtresi
             </button>
             <button
               onClick={() => setActiveCodeTab('twofa')}
@@ -224,7 +227,7 @@ if (!verified) {
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              TOTP 2FA Doğrulama
+              RetroGuard Anti-Cheat
             </button>
           </div>
         </div>
@@ -240,13 +243,14 @@ if (!verified) {
         <div className="px-6 py-4 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-xs text-slate-400 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-cyan-400" />
-            <span>Kayıt ve giriş sisteminde tüm bu güvenlik kontrolleri aktiftir.</span>
+            <span>Kayıt ve giriş zorunluluğu yoktur, dileyen herkes doğrudan bağlanabilir.</span>
           </div>
           <button
-            onClick={onOpenAuth}
-            className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-all shadow-md"
+            onClick={handleConnect}
+            className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-2"
           >
-            Güvenli Giriş & Kayıt Sistemini Dene
+            <Gamepad2 className="w-4 h-4" />
+            <span>Oyuna Doğrudan Bağlan</span>
           </button>
         </div>
       </motion.div>
